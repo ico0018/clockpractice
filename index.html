@@ -3,46 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>小小钟表家</title>
+  <title>数学小乐园</title>
   <link rel="stylesheet" href="styles.css">
-  <style>
-    .mode-switch{grid-template-columns:repeat(2,1fr)}
-    .vertical-calc{width:230px;margin:0 0 18px;padding:15px 20px;background:#fffaf1;border:2px solid #ffe5ad;border-radius:15px;color:#26344f;font-weight:900;font-size:22px;text-align:right;line-height:1.5}
-    .vertical-calc span,.vertical-calc b{display:block}.vertical-calc b{color:#9b7a37;font-size:18px;line-height:1}
-    .minute-answer{display:flex;align-items:center;gap:10px}.minute-answer input{width:170px;border:2px solid #e8edf5;border-radius:12px;padding:13px;text-align:center;font-size:19px;font-weight:900;outline:none}.minute-answer input:focus{border-color:#3867f5}.minute-answer span{font-weight:900}
-    .calc-clocks{display:flex;gap:18px;margin:0 0 18px}.calc-clocks>div{text-align:center;color:#7d8aa2;font-weight:700;font-size:12px}.mini-clock{width:112px;height:112px;background:#fff;border-radius:50%;padding:3px;box-shadow:0 4px 10px #4f63891a}.mini-clock svg{width:100%;height:100%}.mini-clock text{font:9px Arial;fill:#27344f;font-weight:700}.vertical-calc{width:260px}.vertical-row{display:flex;justify-content:flex-end;align-items:center;gap:5px;margin:5px 0}.vertical-row input{width:58px;border:2px solid #e6d7b8;border-radius:7px;background:#fff;text-align:center;padding:7px 2px;font:900 16px Arial;outline:none}.vertical-row input:focus{border-color:#3867f5}.vertical-row b{display:inline!important;font-size:19px!important;color:#26344f!important}.calc-line{display:block!important;text-align:right}.result-row{margin-top:8px}.result-row input{width:55px}.result-row span{display:inline!important;font-size:14px;color:#26344f}
-    .train-scene{display:flex;align-items:center;gap:10px;margin:0 0 20px;width:100%;max-width:430px}.station{text-align:center;color:#66758d;font-size:12px;font-weight:800}.station-sign{display:inline-block;background:#3867f5;color:#fff;border-radius:7px 7px 3px 3px;padding:5px 8px;margin-bottom:6px}.station-sign.arrival{background:#f08a55}.station .mini-clock{width:94px;height:94px}.railway{flex:1;min-width:78px;text-align:center;position:relative;padding-top:8px;color:#7d8aa2;font-size:10px;font-weight:800}.train{font-size:27px;position:relative;z-index:1;line-height:1.15;transform:translateX(-4px)}.track{border-top:5px solid #53647b;margin:0 1px 4px;position:relative}.track:after{content:'';position:absolute;left:0;right:0;top:-8px;height:13px;background:repeating-linear-gradient(90deg,transparent 0 8px,#53647b 8px 11px,transparent 11px 18px);opacity:.8}
-    .number{transform:translate(-50%,-50%)}.train{transform:translateX(-4px) scaleX(-1)}
-    .clock{touch-action:none;user-select:none;-webkit-user-select:none}
-    .clock.readonly{pointer-events:none;cursor:default}
-    .hand-controls{display:flex;gap:10px;margin-top:18px}.hand-control{border:2px solid #e8edf5;background:#fff;color:#66758d;border-radius:11px;padding:9px 16px;font:900 15px Arial,'Microsoft YaHei',sans-serif;cursor:pointer}.hand-control.active{border-color:#3867f5;background:#eef2ff;color:#3867f5}
-    @media(max-width:700px){.mode-switch{grid-template-columns:1fr}.vertical-calc{width:100%}.train-scene{max-width:100%;gap:5px}.station .mini-clock{width:84px;height:84px}.train{font-size:23px}}
-  </style>
+  <link rel="stylesheet" href="fraction-pizza.css">
 </head>
 <body>
   <main class="app-shell">
-    <header><div class="brand">◷ <span>小小钟表家</span></div><div class="streak">🔥 <b id="streakCount">0</b> 连续答对</div></header>
-    <section class="hero"><div><p class="eyebrow">CLOCK MASTER · 练习时间</p><h1>学会看钟，<span>掌握时间</span></h1><p class="subtitle">观察、思考，再动手试一试吧！</p></div><div class="mascot">🦊<small>滴答！</small></div></section>
-    <section class="mode-switch">
-      <button class="mode active" data-mode="read">👀 <span><b>看钟写时间</b><small>根据指针读出时间</small></span></button>
-      <button class="mode" data-mode="set">🖐️ <span><b>拨钟调时间</b><small>根据数字拨动指针</small></span></button>
-      <button class="mode" data-mode="convert">🔄 <span><b>12 / 24 小时制</b><small>练习两种时间表示法</small></span></button>
-      <button class="mode" data-mode="calc">➕ <span><b>时间竖式计算</b><small>算出经过的时间</small></span></button>
-    </section>
-    <section class="exercise-card">
-      <div class="card-head"><div><span class="tag" id="modeTag">看钟写时间</span><h2 id="questionTitle">现在是几点钟？</h2></div><div class="progress-wrap"><span id="progressText">1 / 5</span><div class="progress"><i id="progressBar"></i></div></div></div>
-      <div class="practice-area">
-        <div class="clock-wrap" id="clockWrap"><div class="clock" id="clock"></div><div class="hand-controls hidden" id="handControls" aria-label="选择要拨动的指针"><button type="button" class="hand-control active" data-hand="hour">选定时针</button><button type="button" class="hand-control" data-hand="minute">选定分针</button></div></div>
-        <div class="answer-panel">
-          <div id="readAnswer" class="answer-block"><p class="instruction">请在下面填写时间</p><div class="time-input"><input id="hourInput" type="number" min="1" max="12" placeholder="时"><b>:</b><input id="minuteInput" type="number" min="0" max="59" placeholder="分"></div><p class="hint">每一道题都以 5 分钟为一格</p></div>
-          <div id="setAnswer" class="answer-block hidden"><p class="instruction">先选定指针，再在钟面上拖动调整</p><div class="target-time" id="targetTime">03:00</div><p class="hint">选定时针时只调小时；选定分针时只调分钟</p></div>
-          <div id="convertAnswer" class="answer-block hidden"><div class="time-input"><input id="convertHour" type="number" placeholder="时"><b>:</b><input id="convertMinute" type="number" min="0" max="59" placeholder="分"></div><div class="period-row hidden" id="periodRow"><button type="button" class="period active" data-period="上午">上午</button><button type="button" class="period" data-period="下午">下午</button></div><p class="hint" id="convertHint">请输入 24 小时制时间</p></div>
-          <div id="calcAnswer" class="answer-block hidden"><div class="train-scene"><div class="station"><div class="station-sign">起点站</div><div class="mini-clock" id="calcClockA"></div><small>出发时间（<span id="calcStartPeriod"></span>）</small></div><div class="railway"><div class="train">🚂</div><div class="track"></div><span>开往终点站</span></div><div class="station"><div class="station-sign arrival">终点站</div><div class="mini-clock" id="calcClockB"></div><small>到达时间（<span id="calcEndPeriod"></span>）</small></div></div><div class="vertical-calc"><div class="vertical-row"><input id="calcEndHour" type="number" min="0" max="23" placeholder="时"><b>:</b><input id="calcEndMinute" type="number" min="0" max="59" placeholder="分"></div><div class="vertical-row"><span>−</span><input id="calcStartHour" type="number" min="0" max="23" placeholder="时"><b>:</b><input id="calcStartMinute" type="number" min="0" max="59" placeholder="分"></div><b class="calc-line">────────</b><div class="vertical-row result-row"><input id="calcDurationHour" type="number" min="0" placeholder="时"><span>小时</span><input id="calcDurationMinute" type="number" min="0" max="59" placeholder="分"><span>分钟</span></div></div><p class="hint">看出发、到达时钟，把时间填进竖式；时钟减时钟、分钟减分钟，写出经过了几小时几分钟。</p></div>
-          <button class="submit-btn" id="submitBtn">提交答案 <span>→</span></button><div class="feedback" id="feedback"></div>
+    <header class="topbar">
+      <div class="brand">✦ <span>数学小乐园</span></div>
+      <nav class="main-nav" aria-label="学习工具导航">
+        <button class="nav-item active" data-app="clock">🕰️ 小小钟表家</button>
+        <button class="nav-item" data-app="fraction">🍕 分数小工具</button>
+      </nav>
+      <div class="streak">🔥 <b id="streakCount">0</b> 连续答对</div>
+    </header>
+
+    <section id="clockApp" class="learning-app">
+      <section class="hero"><div><p class="eyebrow">CLOCK MASTER · 练习时间</p><h1>学会看钟，<span>掌握时间</span></h1><p class="subtitle">观察、思考，再动手试一试吧！</p></div><div class="mascot">🦉<small>滴答！</small></div></section>
+      <section class="mode-switch clock-modes">
+        <button class="mode active" data-mode="read">👀 <span><b>看钟写时间</b><small>根据指针读出时间</small></span></button>
+        <button class="mode" data-mode="set">🕰️ <span><b>拨钟调时间</b><small>根据数字拨动指针</small></span></button>
+        <button class="mode" data-mode="convert">🔧 <span><b>12 / 24 小时制</b><small>练习两种时间表示法</small></span></button>
+        <button class="mode" data-mode="calc">➖ <span><b>时间竖式计算</b><small>算出经过的时间</small></span></button>
+      </section>
+      <section class="exercise-card">
+        <div class="card-head"><div><span class="tag" id="modeTag">看钟写时间</span><h2 id="questionTitle">现在是几点钟？</h2></div><div class="progress-wrap"><span id="progressText">1 / 5</span><div class="progress"><i id="progressBar"></i></div></div></div>
+        <div class="practice-area">
+          <div class="clock-wrap" id="clockWrap"><div class="clock" id="clock"></div><div class="hand-controls hidden" id="handControls"><button type="button" class="hand-control active" data-hand="hour">选定时针</button><button type="button" class="hand-control" data-hand="minute">选定分针</button></div></div>
+          <div class="answer-panel">
+            <div id="readAnswer" class="answer-block"><p class="instruction">请在下面填写时间</p><div class="time-input"><input id="hourInput" type="number" min="1" max="12" placeholder="时"><b>:</b><input id="minuteInput" type="number" min="0" max="59" placeholder="分"></div><p class="hint">每一道题都以 5 分钟为一格</p></div>
+            <div id="setAnswer" class="answer-block hidden"><p class="instruction">先选定指针，再在钟面上拖动调整</p><div class="target-time" id="targetTime">03:00</div><p class="hint">选时针时只调小时；选分针时只调分钟</p></div>
+            <div id="convertAnswer" class="answer-block hidden"><div class="time-input"><input id="convertHour" type="number" placeholder="时"><b>:</b><input id="convertMinute" type="number" min="0" max="59" placeholder="分"></div><div class="period-row hidden" id="periodRow"><button type="button" class="period active" data-period="上午">上午</button><button type="button" class="period" data-period="下午">下午</button></div><p class="hint" id="convertHint"></p></div>
+            <div id="calcAnswer" class="answer-block hidden"><p class="instruction">小火车从 <span id="calcStart"></span> 开到 <span id="calcEnd"></span>，一共用了多久？</p><div class="vertical-calc"><div><input id="calcEndHour" type="number" min="0" max="23"> : <input id="calcEndMinute" type="number" min="0" max="59"></div><div>− <input id="calcStartHour" type="number" min="0" max="23"> : <input id="calcStartMinute" type="number" min="0" max="59"></div><hr><div><input id="calcDurationHour" type="number" min="0"> : <input id="calcDurationMinute" type="number" min="0" max="59"></div></div><p class="hint">把出发、到达和经过的时间填进竖式。</p></div>
+            <button class="submit-btn" id="submitBtn">提交答案 <span>→</span></button><div class="feedback" id="feedback"></div>
+          </div>
         </div>
-      </div>
+      </section>
+      <footer><span>完成 5 题，成为钟表小达人！</span><button class="restart-btn" data-restart="clock">↻ 重新开始</button></footer>
     </section>
-    <footer><span>完成 5 题，成为钟表小达人！</span><button id="restartBtn">↻ 重新开始</button></footer>
+
+    <section id="fractionApp" class="learning-app hidden">
+      <section class="hero fraction-hero"><div><p class="eyebrow">FRACTION FUN · 认识分数</p><h1>披萨里的，<span>分数秘密</span></h1><p class="subtitle">看看、切切、选选，把分数变得一目了然！</p></div><div class="mascot">🍕<small>真香！</small></div></section>
+      <section class="mode-switch fraction-modes">
+        <button class="mode active" data-fraction-mode="read">🔍 <span><b>分数的读取</b><small>看披萨，写出分数</small></span></button>
+        <button class="mode" data-fraction-mode="make">🍽️ <span><b>分数小厨师</b><small>切披萨，选入盘子</small></span></button>
+      </section>
+      <section class="exercise-card fraction-card">
+        <div class="card-head"><div><span class="tag" id="fractionModeTag">分数的读取</span><h2 id="fractionTitle">披萨被平均分成几份？取了几份？</h2></div><div class="progress-wrap"><span id="fractionProgressText">1 / 5</span><div class="progress fraction-progress"><i id="fractionProgressBar"></i></div></div></div>
+        <div class="fraction-practice">
+          <div class="pizza-stage"><div id="pizza" class="pizza" aria-label="披萨图"></div><div class="pizza-note" id="pizzaNote">橙色的是取出的披萨</div></div>
+          <div class="answer-panel fraction-answer">
+            <div id="fractionReadAnswer"><p class="instruction">请写出取出的部分占整个披萨的几分之几</p><div class="fraction-input"><input id="numeratorInput" type="number" min="1" placeholder="分子"><span>—</span><input id="denominatorInput" type="number" min="2" placeholder="分母"></div><p class="hint">分子写取出的份数，分母写一共平均分成的份数。</p></div>
+            <div id="fractionMakeAnswer" class="hidden"><p class="instruction">请把披萨平均切成 <b id="targetDenominator"></b> 份，再把 <b id="targetNumerator"></b> 份放进盘子里</p><div class="make-status"><span>已切出 <b id="cutCount">0</b> 刀</span><span>盘子里有 <b id="plateCount">0</b> 份</span></div><p class="hint" id="makeHint">点“开始切披萨”后，从披萨中心向边缘滑动手指来切。</p><div class="pizza-actions"><button id="cutPizzaBtn" type="button">✂️ 开始切披萨</button><button id="clearPlateBtn" type="button">↺ 重新切</button></div></div>
+            <button class="submit-btn" id="fractionSubmitBtn">提交答案 <span>→</span></button><div class="feedback" id="fractionFeedback"></div>
+          </div>
+        </div>
+      </section>
+      <footer><span>完成 5 题，成为分数小达人！</span><button class="restart-btn" data-restart="fraction">↻ 重新开始</button></footer>
+    </section>
   </main>
   <script src="app.js"></script>
 </body>

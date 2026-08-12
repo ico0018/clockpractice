@@ -1,0 +1,9 @@
+.pizza svg{display:block;width:100%;height:100%}
+.pizza-slice{position:static;inset:auto;transform:none;clip-path:none;background:none;border:0;fill:#ffd464;stroke:#fff4d4;stroke-width:3;transition:filter .18s,fill .18s}
+.pizza-slice::after{content:none}
+.pizza-slice[role=button]{cursor:pointer;pointer-events:auto}
+.pizza-slice[role=button]:focus{outline:none;filter:brightness(.85)}
+.pizza-slice.taken{filter:none;background:none;fill:#ff9359}
+.pizza-slice.on-plate{filter:none;background:none;fill:#b9c4d3}
+.pizza.cutting{touch-action:none;cursor:crosshair}
+.pizza-cut-line{stroke:#ca4d31;stroke-width:7;stroke-linecap:round;pointer-events:none}
