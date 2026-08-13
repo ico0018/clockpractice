@@ -7,3 +7,7 @@
 .pizza-slice.on-plate{filter:none;background:none;fill:#b9c4d3}
 .pizza.cutting{touch-action:none;cursor:crosshair}
 .pizza-cut-line{stroke:#ca4d31;stroke-width:7;stroke-linecap:round;pointer-events:none}
+.fireworks{position:fixed;inset:0;z-index:50;pointer-events:none;overflow:hidden}
+.firework{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--spark);left:var(--x);top:var(--y);animation:burst .9s ease-out forwards;box-shadow:0 0 10px var(--spark)}
+@keyframes burst{0%{transform:translate(-50%,-50%) scale(.3);opacity:1}100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1);opacity:0}}
+.sad-mascot{position:fixed;z-index:60;left:50%;top:92px;transform:translateX(-50%);display:flex;align-items:center;gap:9px;padding:10px 17px;background:#fff;border:2px solid #ffd7d0;border-radius:18px;box-shadow:0 8px 24px #55372a22;color:#df6548;font:900 15px Arial,'Microsoft YaHei',sans-serif;animation:sad-pop .3s ease-out}.sad-mascot span{font-size:31px;animation:sad-wobble .8s ease-in-out infinite}.sad-mascot b{white-space:nowrap}@keyframes sad-pop{from{transform:translateX(-50%) translateY(-12px) scale(.8);opacity:0}to{transform:translateX(-50%) translateY(0) scale(1);opacity:1}}@keyframes sad-wobble{50%{transform:rotate(-10deg) translateY(2px)}}
