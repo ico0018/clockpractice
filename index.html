@@ -6,6 +6,8 @@
   <title>数学小乐园</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="fraction-pizza.css">
+  <link rel="stylesheet" href="thinking.css">
+  <link rel="stylesheet" href="calculation.css">
 </head>
 <body>
   <div id="fireworks" class="fireworks" aria-hidden="true"></div>
@@ -16,6 +18,7 @@
       <nav class="main-nav" aria-label="学习工具导航">
         <button class="nav-item active" data-app="clock">🕰️ 小小钟表家</button>
         <button class="nav-item" data-app="fraction">🍕 分数小工具</button>
+        <button class="nav-item" data-app="calculation">🧮 计算小练习</button>
       </nav>
       <div class="streak">🔥 <b id="streakCount">0</b> 连续答对</div>
     </header>
@@ -62,6 +65,22 @@
         </div>
       </section>
       <footer><span>完成 5 题，成为分数小达人！</span><button class="restart-btn" data-restart="fraction">↻ 重新开始</button></footer>
+    </section>
+
+    <section id="calculationApp" class="learning-app hidden">
+      <section class="hero calculation-hero"><div><p class="eyebrow">CALCULATION PRACTICE · 整数运算</p><h1>算得又快，<span>又准确</span></h1><p class="subtitle">先完成 10 道口算，再挑战 4 道竖式填空！</p></div><div class="mascot">🧮<small>开算！</small></div></section>
+      <section class="calculation-card"><div class="card-head"><div><span class="tag">第一关 · 口算</span><h2>10 道加减乘除混合运算</h2></div><span class="calc-score" id="calculationScore">完成后查看得分</span></div><div class="oral-grid" id="oralGrid"></div></section>
+      <section class="calculation-card vertical-section"><div class="card-head"><div><span class="tag">第二关 · 竖式</span><h2>4 道填空竖式</h2></div><span class="vertical-note">在空格填入缺少的数字</span></div><div class="vertical-grid" id="verticalGrid"></div></section>
+      <div class="calculation-actions"><button class="submit-btn" id="calculationSubmit">检查答案 <span>→</span></button><button class="new-calculation" id="newCalculation" type="button">↻ 换一组题</button></div><div class="feedback" id="calculationFeedback"></div>
+    </section>
+
+    <section id="thinkingApp" class="learning-app hidden">
+      <section class="hero thinking-hero"><div><p class="eyebrow">THINKING PLAYGROUND · 看懂题目</p><h1>把题目变成，<span>小动画</span></h1><p class="subtitle">先看发生了什么，再一步一步找到答案！</p></div><div class="mascot">💡<small>想到了！</small></div></section>
+      <section class="thinking-grid">
+        <article class="thinking-card banana-card"><div class="thinking-title"><span>🍌</span><div><b>分香蕉：盈亏问题</b><small>每只多分的香蕉，正好补上剩余差</small></div></div><div class="compare-scene banana-compare"><div class="plan"><b>每只分 16 根</b><div class="monkey-row"><span>🐒</span><span>🐒</span><span>🐒</span><em>… 6 只</em></div><div class="banana-bar"><i>🍌</i><i>🍌</i><i>🍌</i><i>🍌</i></div><small>还多 24 根</small></div><div class="plan"><b>每只分 19 根</b><div class="monkey-row"><span>🐒</span><span>🐒</span><span>🐒</span><em>… 6 只</em></div><div class="banana-bar more"><i>🍌</i><i>🍌</i><i>🍌</i><i>🍌</i><i>🍌</i></div><small>还多 6 根</small></div></div><ol class="thinking-steps"><li>每只多分：<b>19 − 16 = 3（根）</b>。</li><li>剩余香蕉少了：<b>24 − 6 = 18（根）</b>。</li><li>猴子数：<b>18 ÷ 3 = 6（只）</b>。</li><li>香蕉总数：<b>16 × 6 + 24 = 120（根）</b>。</li></ol></article>
+        <article class="thinking-card canal-card"><div class="thinking-title"><span>💧</span><div><b>挖水渠：盈亏问题</b><small>两种分工方案，水渠都差一段</small></div></div><div class="compare-scene"><div class="plan"><b>每人挖 24 米</b><div class="worker-row"><span>👷</span><span>👷</span><span>👷</span><em>… 30 人</em></div><div class="canal-bar short"><i></i></div><small>比水渠总长多 120 米</small></div><div class="plan"><b>每人挖 30 米</b><div class="worker-row"><span>👷</span><span>👷</span><span>👷</span><em>… 30 人</em></div><div class="canal-bar long"><i></i></div><small>比水渠总长多 300 米</small></div></div><ol class="thinking-steps"><li>每人多挖：<b>30 − 24 = 6（米）</b>。</li><li>总共多出的长度：<b>300 − 120 = 180（米）</b>。</li><li>人数：<b>180 ÷ 6 = 30（人）</b>。</li><li>水渠长：<b>30 × 24 − 120 = 600（米）</b>。</li></ol></article>
+      </section>
+      <section class="thinking-tip">🧠 盈亏问题口诀：<b>“每份差” × “总人数” = “两次剩余量的差”</b>。先算两个“差”，就能求出人数。</section>
     </section>
   </main>
   <script src="app.js"></script>
