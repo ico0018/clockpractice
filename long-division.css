@@ -1,0 +1,6 @@
+.long-division{padding:32px 22px 15px;text-align:left}
+.long-division:before{content:'除法竖式';right:16px}
+.long-division .quotient{height:38px;margin-left:48px;padding-right:2px;text-align:right;border-bottom:2px solid #9e7b54;line-height:32px}
+.long-division .division-body{display:flex;align-items:flex-start;margin-top:5px;font-size:23px}
+.long-division .divisor{padding:7px 8px 0 0}
+.long-division .dividend{min-width:64px;padding:5px 0 4px 9px;border-left:2px solid #9e7b54;line-height:30px}
